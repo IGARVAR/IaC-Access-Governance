@@ -31,8 +31,8 @@ This repository provides a curated collection of PowerShell automation tools to 
 
 ## File Structure
 
-| Script                                         | Description                                                                 |
-|-----------------------------------------------|-----------------------------------------------------------------------------|
+| Script                                        | Description                                                                |
+|-----------------------------------------------|----------------------------------------------------------------------------|
 | `IaC_OPER_Create_MS_Teams_with_RES_Group.ps1` | Creates a Team and RES group with metadata and extension attributes.       |
 | `IaC_OPER_Bulk_Add_Users_to_Role.ps1`         | Adds users to AD ROLE groups via validated CSV.                            |
 | `IaC_OPER_GitHub_Teams_Group_Sync.ps1`        | Syncs GitHub team membership to AD or M365 groups.                         |
