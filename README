@@ -1,54 +1,65 @@
 # IaC-Access-Governance
 
 **Infrastructure-as-Code for Identity & Access Management**  
-Automated provisioning, ownership enforcement, and reporting for Active Directory and Microsoft Teams.
+Governance-driven provisioning, ownership enforcement, and reporting for Active Directory and Microsoft Teams.
 
 ## Overview
 
-This repository contains a set of PowerShell automation scripts designed to streamline access governance using Infrastructure-as-Code (IaC) principles. The tools in this collection help enforce ownership, ensure proper group provisioning, and align AD structures with Microsoft Teams deployments.
+This repository provides a curated collection of PowerShell automation tools to implement robust access governance through Infrastructure-as-Code (IaC). It is designed to support enterprises moving toward GitOps, Zero Trust, and least privilege models by enforcing declarative role structures and group metadata standards.
 
-**Key Scenarios Covered:**
-- Role-based access provisioning from structured data sources (CSV, Forms, email).
-- Automated AD group creation and metadata tagging.
-- Ownership mapping and gap reporting.
-- Microsoft Teams ↔ AD Group synchronization using extension attributes.
-- Identity audits with UPN/email lookups.
+### Key Highlights:
+- Declarative role provisioning via `roles.template.json` or `.yaml`
+- GitOps-compatible workflows for AD and Teams sync
+- Automated enforcement of `managedBy`, `description`, and classification attributes
+- Identity audits based on user or group metadata
+- Orphaned group detection and compliance tagging
 
-## Use Cases
+---
 
-- Automate Microsoft Teams creation with corresponding AD groups and compliance tagging.
-- Bulk assign users to role-based groups across environments.
-- Identify orphaned or unmanaged AD groups by missing `managedBy`.
-- Search all groups tied to specific users via UPN or export.
-- Reverse-map Teams to RES/ROLE AD groups based on attributes.
+## Primary Use Cases
+
+- Provision ROLE/RES groups from structured role templates (JSON/YAML)
+- Automate Microsoft Teams creation and metadata alignment with Active Directory
+- Audit AD environments for unmanaged, untagged, or orphaned groups
+- Sync GitHub or DevOps source-of-truth role files with M365/AD
+- Trace all access paths for a user by UPN or email
+- Reverse-map Teams to AD via `extensionAttribute11` linking
+
+---
 
 ## File Structure
 
 | Script | Description |
 |--------|-------------|
-| `IAC_OPER_Create_MS_Teams_with_RES_Group.ps1` | Creates a Microsoft Team + matching AD group, auto-tags metadata, and links via extension attributes. |
-| `IAC_OPER_Bulk_Add_Users_to_Role.ps1` | Bulk-assigns users to specified ROLE groups using validated CSV input. |
-| `IAC_REPORT_AD_Groups_ManagedBy.ps1` | Exports all AD groups with `managedBy`, useful for ownership audits. |
-| `IAC_REPORT_User_Groups.ps1` | Shows all groups a given user belongs to (input: samAccountName). |
-| `IAC_REPORT_User_Groups_By_Email.ps1` | Same as above, but resolves user via email/UPN. |
-| `IAC_REPORT_SamAccountNames_From_CSV.ps1` | Pulls samAccountName attributes for exported users to validate input data. |
-| `IAC_REPORT_MSTeams_ID_to_RES_Group.ps1` | Maps a Teams GroupID (extensionAttribute11) to its corresponding AD group. |
-| `IAC_REPORT_SEQ_Groups_DisplayName_OU.ps1` | Displays AD groups filtered by naming pattern and OU. |
+| `IaC_OPER_Create_MS_Teams_with_RES_Group.ps1` | Creates a Microsoft Team and linked AD group with metadata tagging and ownership mapping. |
+| `IaC_OPER_Bulk_Add_Users_to_Role.ps1` | Adds users in bulk to AD ROLE groups from validated CSV sources. |
+| `IaC_OPER_GitHub_Teams_Group_Sync.ps1` | Syncs GitHub team membership to AD or M365 groups using IaC workflows. |
+| `IaC_OPER_Set_ManagedBy_and_Metadata_From_Template.ps1` | Parses `roles.template.json` to assign `managedBy`, classification, and attributes to ROLE/RES groups. |
+| `IaC_REPORT_ZeroTrust_Orphaned_AD_Groups.ps1` | Detects unmanaged and unused AD groups, flags candidates for decommissioning. |
+| `IaC_REPORT_AD_Groups_ManagedBy.ps1` | Exports all groups with ownership metadata for compliance tracking. |
+| `IaC_REPORT_User_Groups.ps1` | Returns all AD groups associated with a user’s `samAccountName`. |
+| `IaC_REPORT_User_Groups_By_Email.ps1` | Resolves group membership via email or UPN input. |
+| `IaC_REPORT_MSTeams_ID_to_RES_Group.ps1` | Maps a Teams `GroupID` to a corresponding AD RES group using extension attributes. |
+| `IaC_REPORT_SEQ_Groups_DisplayName_OU.ps1` | Filters and exports AD groups by naming convention and OU hierarchy. |
 
-## Author
+---
 
-**Ivan Garkusha**  
-Cloud Systems Architect | Microsoft 365 & Azure Automation Specialist  
-Atlanta, GA  
-[LinkedIn](https://www.linkedin.com/in/ivangarkusha) | [GitHub](https://github.com/IvanGarkusha)
+## Template Structure
 
-## Requirements
+Role templates are expected in the following structure:
 
-- PowerShell 5.1+ or Core
-- RSAT for Active Directory
-- MicrosoftTeams module (if Teams operations included)
-- Proper permissions to read/write AD and Teams settings
-
-## License
-
-MIT License
+```json
+[
+  {
+    "GroupName": "ROLE_AD_ENGINEERING",
+    "ManagedByUPN": "lead.eng@example.com",
+    "Classification": "Confidential",
+    "Sensitivity": "Internal"
+  },
+  {
+    "GroupName": "RES_O365_TEAMS-MARKETING_MEMBER",
+    "ManagedByUPN": "manager.marketing@example.com",
+    "Classification": "Public",
+    "Sensitivity": "External"
+  }
+]
