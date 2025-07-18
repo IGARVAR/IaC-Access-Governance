@@ -1,1 +1,69 @@
+IaC-Access-Governance
+Infrastructure-as-Code for Identity & Access Management
+Provisioning, ownership enforcement, and reporting for Active Directory and Microsoft Teams using declarative IaC models.
 
+🧠 Overview
+This repo provides a PowerShell toolkit for implementing access governance through Infrastructure-as-Code (IaC).
+It supports GitOps workflows, Zero Trust initiatives, and least privilege models by enforcing structured group policies and metadata standards.
+
+🔑 Key Features
+Declarative role provisioning via roles.template.json or .yaml
+
+GitOps-compatible automation for AD and Microsoft Teams
+
+Metadata enforcement: managedBy, description, classification, sensitivity
+
+Identity audits: unmanaged, untagged, orphaned groups
+
+Cross-platform group syncing (Teams, GitHub, M365)
+
+🚀 Use Cases
+Provision RES/ROLE groups from structured templates
+
+Automate Teams creation and metadata alignment with Active Directory
+
+Detect and remediate stale or non-compliant AD groups
+
+Sync GitHub Teams with AD/M365 groups
+
+Trace user access paths by UPN/email
+
+Reverse-map Teams to AD via extensionAttribute11
+
+📂 File Index
+Script Name	Description
+IaC_OPER_Create_MS_Teams_with_RES_Group.ps1	Creates Team and RES group with metadata and extension attributes
+IaC_OPER_Bulk_Add_Users_to_Role.ps1	Adds users to AD role groups via validated CSV
+IaC_OPER_GitHub_Teams_Group_Sync.ps1	Syncs GitHub team membership to AD/M365 groups
+IaC_OPER_Set_ManagedBy_and_Metadata.ps1	Applies metadata from roles.template.json
+IaC_REPORT_ZeroTrust_Orphaned_AD_Groups.ps1	Detects unmanaged, empty, or untagged AD groups
+IaC_REPORT_AD_Groups_ManagedBy.ps1	Exports AD groups with managedBy attribute
+IaC_REPORT_User_Groups.ps1	Lists AD groups by samAccountName
+IaC_REPORT_User_Groups_By_Email.ps1	Resolves group membership by email/UPN
+IaC_REPORT_MSTeams_ID_to_RES_Group.ps1	Maps Teams GroupId to RES AD groups via extensionAttribute11
+IaC_REPORT_SEQ_Groups_DisplayName_OU.ps1	Filters AD groups by naming and OU structure
+
+📄 Template Structure
+Role templates use JSON or YAML for GitOps-aligned group provisioning and compliance tagging.
+
+json
+Copy
+Edit
+[
+  {
+    "GroupName": "ROLE_AD_ENGINEERING",
+    "ManagedByUPN": "lead.eng@example.com",
+    "Classification": "Confidential",
+    "Sensitivity": "Internal"
+  },
+  {
+    "GroupName": "RES_O365_TEAMS-MARKETING_MEMBER",
+    "ManagedByUPN": "manager.marketing@example.com",
+    "Classification": "Public",
+    "Sensitivity": "External"
+  }
+]
+👤 Author
+Ivan Garkusha
+Cloud Automation Engineer • M365 Governance • Identity & Security
+LinkedIn • GitHub
