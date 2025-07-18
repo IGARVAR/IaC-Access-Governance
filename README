@@ -10,6 +10,7 @@ Governance-driven provisioning, ownership enforcement, and reporting for Active 
 This repository provides a curated collection of PowerShell automation tools to implement robust access governance through Infrastructure-as-Code (IaC). Designed to support enterprise environments adopting GitOps, Zero Trust, and least privilege access models by enforcing declarative role structures and group metadata standards.
 
 ### 🔑 Key Highlights
+
 - Declarative role provisioning via `roles.template.json` or `.yaml`
 - GitOps-compatible workflows for Active Directory and Microsoft Teams
 - Automated enforcement of `managedBy`, `description`, and classification metadata
@@ -65,4 +66,3 @@ Role templates are stored as `roles.template.json` or `.yaml` and act as GitOps-
     "Sensitivity": "External"
   }
 ]
-
