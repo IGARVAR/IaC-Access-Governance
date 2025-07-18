@@ -51,18 +51,3 @@ This repository provides a curated collection of PowerShell automation tools to 
 
 Role templates are stored as `roles.template.json` or `.yaml` and act as GitOps-compatible sources of truth for group ownership, classification, and compliance metadata.
 
-```json
-[
-  {
-    "GroupName": "ROLE_AD_ENGINEERING",
-    "ManagedByUPN": "lead.eng@example.com",
-    "Classification": "Confidential",
-    "Sensitivity": "Internal"
-  },
-  {
-    "GroupName": "RES_O365_TEAMS-MARKETING_MEMBER",
-    "ManagedByUPN": "manager.marketing@example.com",
-    "Classification": "Public",
-    "Sensitivity": "External"
-  }
-]
